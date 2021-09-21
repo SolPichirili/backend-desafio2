@@ -8,4 +8,30 @@ const miProducto = {
     thumbnail: "https://i.ytimg.com/vi/BmaYGHxQc9c/maxresdefault.jpg"
 }
 
-contenedor.save(miProducto);
+// const save = async() => {
+//     const id = await contenedor.save(miProducto);
+//     console.log(id);
+// }
+// save();
+
+// const getById = async() =>{
+//     const listId = await contenedor.getById(1);
+//     console.log(listId);
+// }
+// getById();
+
+// const getAll = async() =>{
+//     const list = await contenedor.getAll();
+//     console.log(list);
+// }
+// getAll();
+
+const deleteById = async() =>{
+    await contenedor.deleteById(1);
+}
+deleteById();
+
+// const deleteAll = async() =>{
+//     await contenedor.deleteAll();
+// }
+// deleteAll();

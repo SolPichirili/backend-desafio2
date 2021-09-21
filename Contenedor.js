@@ -5,29 +5,73 @@ class Contenedor {
         this.file = file;
     }
 
-    save(product) {
-        console.log('save: ', product);
+    async save(product) {
+        try {
+            const content = await fs.promises.readFile(`./${this.file}`, 'utf-8')
 
-        fs.promises.readFile(`./${this.file}`, 'utf-8')
-            .then((content) => {
-                console.log(content);
-                if(content === ""){
-                    product.id = 1;
-                    return product;
+            let products = [];
 
-                }
-                const listaDeProductos = JSON.parse(content)
-                product.id = listaDeProductos.length;
-                return product;
-            })
-            .then((product) =>{
-                const productoString = JSON.stringify(product, null, 2);
-                console.log('Lista para guardar: ', productoString);
-            })
-            .catch((error) =>{
-                console.error('Error: ', error)
-            })
-        //fs.promises.writeFile(`./${this.file}`)
+            if (content === "") {
+                product.id = 1;
+                products.push(product);
+            } else {
+                const listaDeProductos = JSON.parse(content);
+
+                product.id = listaDeProductos.length + 1;
+                listaDeProductos.push(product);
+                products = listaDeProductos;
+            }
+            const productoString = JSON.stringify(products, null, 2);
+            await fs.promises.writeFile(`./${this.file}`, productoString);
+            return `ID del producto agregado: ${product.id}`;
+        } catch (error) {
+            console.error('Error: ', error);
+        }
+
+    }
+
+    async getById(id) {
+        try {
+            const content = await fs.promises.readFile(`./${this.file}`, 'utf-8')
+            const listaDeProductos = JSON.parse(content);
+            if (listaDeProductos.find(e => e.id === id)) {
+                return listaDeProductos.find(e => e.id === id);
+            } else {
+                return null;
+            }
+        } catch (error) {
+            console.error('Error: ', error);
+        }
+    }
+
+    async getAll() {
+        try {
+            const content = await fs.promises.readFile(`./${this.file}`, 'utf-8');
+            const listaDeProductos = JSON.parse(content);
+            return listaDeProductos;
+        } catch (error) {
+            console.error('Error: ', error);
+        }
+    }
+
+    async deleteById(id) {
+        try {
+            const content = await fs.promises.readFile(`./${this.file}`, 'utf-8');
+            const listaDeProductos = JSON.parse(content);
+            if (listaDeProductos.find(e => e.id === id)){
+                const content = await fs.promises.writeFile(`./${this.file}`, '');
+            }
+        } catch (error) {
+            console.error('Error: ', error);
+        }
+    }
+
+    async deleteAll() {
+        try {
+            const content = await fs.promises.writeFile(`./${this.file}`, '');
+        } catch (error) {
+            console.error('Error: ', error);
+        }
     }
 }
 
