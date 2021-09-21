@@ -34,11 +34,14 @@ class Contenedor {
         try {
             const content = await fs.promises.readFile(`./${this.file}`, 'utf-8')
             const listaDeProductos = JSON.parse(content);
-            if (listaDeProductos.find(e => e.id === id)) {
-                return listaDeProductos.find(e => e.id === id);
-            } else {
+            const product = listaDeProductos.find(e => e.id === id);
+
+            if (!product) {
                 return null;
             }
+
+            return product;
+
         } catch (error) {
             console.error('Error: ', error);
         }
@@ -58,9 +61,10 @@ class Contenedor {
         try {
             const content = await fs.promises.readFile(`./${this.file}`, 'utf-8');
             const listaDeProductos = JSON.parse(content);
-            if (listaDeProductos.find(e => e.id === id)){
-                const content = await fs.promises.writeFile(`./${this.file}`, '');
-            }
+            const product = listaDeProductos.filter(e => e.id !== id);
+            const productString = JSON.stringify(product, null, 2);
+        
+            await fs.promises.writeFile(`./${this.file}`, productString);
         } catch (error) {
             console.error('Error: ', error);
         }

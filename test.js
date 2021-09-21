@@ -1,6 +1,6 @@
 const Contenedor = require('./Contenedor');
 
-const contenedor = new Contenedor ('products.json');
+const contenedor = new Contenedor('products.json');
 
 const miProducto = {
     title: "Canapés x24",
@@ -8,30 +8,30 @@ const miProducto = {
     thumbnail: "https://i.ytimg.com/vi/BmaYGHxQc9c/maxresdefault.jpg"
 }
 
-// const save = async() => {
-//     const id = await contenedor.save(miProducto);
-//     console.log(id);
-// }
-// save();
+const save = async() => {
+    const id = await contenedor.save(miProducto);
+    console.log(id);
+}
+save();
 
-// const getById = async() =>{
-//     const listId = await contenedor.getById(1);
-//     console.log(listId);
-// }
-// getById();
+const getById = async() =>{
+    const listId = await contenedor.getById(2);
+    console.log(listId);
+}
+getById();
 
-// const getAll = async() =>{
-//     const list = await contenedor.getAll();
-//     console.log(list);
-// }
-// getAll();
+const getAll = async() =>{
+    const list = await contenedor.getAll();
+    console.log(list);
+}
+getAll();
 
-const deleteById = async() =>{
+const deleteById = async () => {
     await contenedor.deleteById(1);
 }
 deleteById();
 
-// const deleteAll = async() =>{
-//     await contenedor.deleteAll();
-// }
-// deleteAll();
+const deleteAll = async() =>{
+    await contenedor.deleteAll();
+}
+deleteAll();
